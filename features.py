@@ -5,10 +5,12 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
 class Features:
+    @staticmethod
     def convert_cate_to_num(df, col_name, cate1, cate2):
         df[col_name] = df[col_name].map({cate1: 1, cate2: 0}).astype(int)
         return df
 
+    @staticmethod
     def preprocessing(X_train, X_test):
         numerical = ['Age', 'RestingBP', 'Cholesterol', 'FastingBS', 'MaxHR', 'Oldpeak']
         binary = ['Sex', 'ExerciseAngina']
