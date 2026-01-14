@@ -14,26 +14,16 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import classification_report, f1_score, recall_score, accuracy_score
 
 from data import Data
+from features import Features
 
 df = Data.load_data('data.csv')
 
-df['Sex'] = df['Sex'].map({'M': 1, 'F': 0}).astype(int)
-df['ExerciseAngina'] = df['ExerciseAngina'].map({'Y': 1, 'N': 0}).astype(int)
+df = Features.convert_cate_to_num(df, 'Sex', 'M', 'F')
+df = Features.convert_cate_to_num(df, 'ExerciseAngina', 'Y', 'N')
 
 X_train, X_test, y_train, y_test = Data.train_test_split(df, 'HeartDisease')
 
-numerical = ['Age', 'Sex', 'RestingBP', 'Cholesterol', 'FastingBS', 'MaxHR', 'Oldpeak']
-cate = ['ChestPainType', 'RestingECG', 'ST_Slope']
-
-preprocessor = ColumnTransformer(
-    transformers = [
-        ("Numerical", StandardScaler(), numerical),
-        ("Categorical", OneHotEncoder(handle_unknown='ignore'), cate)
-    ]
-)
-
-X_train = preprocessor.fit_transform(X_train)
-X_test = preprocessor.transform(X_test)
+X_train, X_test, preprocessor = Features.preprocessing(X_train, X_test)
 
 def model_accuracy(og, pred):
     report = classification_report(og, pred)
