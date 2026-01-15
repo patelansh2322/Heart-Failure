@@ -14,17 +14,17 @@ def build_and_evaluate_model(X_train, y_train, X_test, y_test):
     classifiers = {
         "RandomForestClassifier": RandomForestClassifier(
             n_estimators=300, min_samples_split=10, min_samples_leaf=1,
-            max_features='sqrt', max_depth=20
+            max_features='sqrt', max_depth=20, random_state=42
         ), 
         "GradientBoostingClassifier": GradientBoostingClassifier(
             subsample=0.85, n_estimators=100, min_samples_split=5,
-            min_samples_leaf=2, max_depth=3, learning_rate=0.05
+            min_samples_leaf=2, max_depth=3, learning_rate=0.05, random_state=42
         ), 
         "AdaBoostClassifier": AdaBoostClassifier(
             n_estimators=100, learning_rate=0.05,
-            estimator=DecisionTreeClassifier(max_depth=3)
+            estimator=DecisionTreeClassifier(max_depth=3), random_state=42
         ),
-        "LogisticRegression": LogisticRegression(solver='liblinear', C=1)
+        "LogisticRegression": LogisticRegression(solver='liblinear', C=1, random_state=42)
     }
 
     best_score = -1
