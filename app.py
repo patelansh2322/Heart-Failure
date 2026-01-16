@@ -13,6 +13,7 @@ mod = saved["model"]
 @app.route("/", methods=["GET", "POST"])
 def home():
     prediction = None
+    risk = None
 
     if request.method == "POST":
         sex_map = {'M': 1, 'F': 0}
@@ -43,4 +44,4 @@ def home():
     return render_template("index.html", prediction=prediction, risk=risk)
 
 if __name__ == "__main__": 
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
