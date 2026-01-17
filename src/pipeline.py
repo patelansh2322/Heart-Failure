@@ -3,9 +3,12 @@ from src.features import convert_cate_to_num, preprocessing
 from src.model import build_and_evaluate_model
 import pickle
 import os
+import pandas as pd
 
-def run_pipeline(data_path, save_path="output/"):
+def run_pipeline(data_path, user_path, save_path="output/"):
     df = load_data(data_path)
+    df_new_user = load_data(user_path)
+    df = pd.concat([df, df_new_user], ignore_index=True)
 
     df = convert_cate_to_num(df)
     
